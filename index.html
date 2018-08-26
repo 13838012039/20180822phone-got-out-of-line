@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <script src="./jquery-3.3.1.js" type="text/javascript"></script>
+
     <style>
         /* 全局 */
         
@@ -14,7 +15,78 @@
             margin: 0;
             padding: 0;
         }
+        
+        .goAway {
+            display: none;
+        }
+        
+        li {
+            list-style: none;
+        }
+        
+        .clearFloat::after {
+            content: '';
+            display: block;
+            clear: both;
+        }
         /* 主内容 */
+        
+        main {
+            height: 100vh;
+        }
+        
+        #shadow {
+            position: fixed;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 3;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 100%;
+        }
+        
+        #message {
+            position: fixed;
+            z-index: 4;
+            height: 60%;
+            width: 80%;
+            left: 50%;
+            margin-left: -40%;
+            top: 50%;
+            margin-top: -50%;
+            background: white;
+            box-sizing: border-box;
+            border-radius: 5px;
+            padding: 20px;
+        }
+        
+        #message .title {
+            text-align: center;
+        }
+        
+        #message .title span {
+            font-size: 18px;
+            font-weight: bold;
+            color: #898989;
+            font-family: "helvetica neue", tahoma, "hiragino sans gb", stheiti, "wenquanyi micro hei", "\5FAE\8F6F\96C5\9ED1,\5B8B\4F53", sans-serif!important;
+        }
+        
+        #message .wrapYes {
+            position: absolute;
+            height: 30px;
+            width: 30%;
+            background: #3CAB0E;
+            border-radius: 3px;
+            bottom: 20px;
+            left: 50%;
+            margin-left: -15%;
+            color: #F9FAF9;
+            text-align: center;
+            padding: 3px 0;
+            box-sizing: border-box;
+        }
+        
+        #message .yes {}
         
         .container {
             padding: 6%;
@@ -106,12 +178,27 @@
         
         .submit {
             display: block;
-            margin: 0 auto;
+            margin: 20px 0 auto auto;
             background: #3CAB0E;
             margin-top: 20px;
             border: none;
             color: white;
             padding: 3px 8px;
+        }
+        
+        #wrapButton {
+            width: 40%;
+            float: left;
+        }
+        
+        #logo {
+            width: 60%;
+            background: url('./img/1.png') no-repeat;
+            background-position: 20px;
+            background-size: auto 20px;
+            float: left;
+            height: 25px;
+            margin-top: 20px;
         }
         /* 尾部 */
         
@@ -131,67 +218,86 @@
 </head>
 
 <body>
-    <!-- 头部 -->
-    <header><span><strong>国内</strong></span>交通违规查询</header>
-    <!-- 主内容 -->
-    <div class="container">
-        <div class="container-inner">
-            <form action="http://api.sprzny.com/weizhang/api/" method="post" target="_blank">
 
-                <p>
+    <main>
+        <div id='shadow'> </div>
+        <div id="message">
+            <div class="title">
+                <span>您的交通查询如下</span>
+            </div>
+            <div class="content">
+                <ul>
+                    <li id="resultcode">1</li>
+                    <li id='reason'>23</li>
+                    <li id='result'>3</li>
+                    <!-- <li id=''>23</li>
+                    <li id=''>3</li>
+                    <li id=''>23</li>
+                    <li id=''>3</li>
+                    <li id=''>23</li>
+                    <li id=''>3</li>
+                    <li id=''>23</li>
+                    <li id=''>3</li> -->
+                </ul>
+            </div>
+            <div class="wrapYes">
+                <span class="yes" id="yes">确认</span>
+            </div>
 
-                    <label>
-                        <span class="inputName">车牌号码:</span>
-                           <!-- <div class="wrapSelect">  -->
-                                <select name="carId" id="carId">
-                                  <!-- JS写入的省份数据 -->
-                                </select>
-                            <!-- </div> -->
-                                 <input type="text" id="idNumber" name="classno" placeholder="&nbsp车牌号码"/></label>
-
-                </p>
-                <p>
-                    <label><span class="inputName">车架号码:<span> <input class="long" type="text" name="engineno" placeholder="&nbsp输入完整的车架号"/> </label>
-                </p>
-                <p>
-                    <label><span class="inputName">发动机号:<span> <input class="long" type="text" name="phone" placeholder="&nbsp输入发动机号码后六位"/> </label>
-                </p>
-                <input class="submit" type="submit" value="开始查询" />
-                <div><img src="" alt="图片"><span>数据来自车首页</span></div>
-            </form>
 
         </div>
+        <!-- 头部 -->
+        <header><span><strong>国内</strong></span>交通违规查询</header>
+        <!-- 主内容 -->
+        <div class="container">
+            <div class="container-inner">
+                <form method="get" target="_blank">
 
-    </div>
+                    <p>
 
-    <!-- 尾部 -->
-    <footer>
-        <div class="text">可查<span id="locationWord" class="blue">豫A</span>车牌全国违章，以及全国车在<span id="location" class="blue">河南</span>境内违章</div>
-    </footer>
+                        <label>
+                              <span class="inputName">车牌号码:</span>
+                                 <!-- <div class="wrapSelect">  -->
+                                      <select name="carId" id="carId">
+                                        <!-- JS写入的省份数据 -->
+                                      </select>
+                                  <!-- </div> -->
+                                       <input type="text" id="idNumber" name="carId" placeholder="&nbsp车牌号码"/></label>
+
+                    </p>
+                    <p>
+                        <label><span class="inputName">车架号码:<span> <input class="long" type="text" id="classno" name="classno" placeholder="&nbsp输入完整的车架号"/> </label>
+                    </p>
+                    <p>
+                        <label><span class="inputName">发动机号:<span> <input class="long" type="text" id="engineno" name="engineno" placeholder="&nbsp输入发动机号码后六位"/> </label>
+                    </p>
+                    <div class='clearFloat'>
+                        <div id='wrapButton'>
+                            <input class="submit" type="button" id='submit' value="开始查询" />
+                        </div>
+                        <div id='logo'>
+
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+        <!-- <div><button id="butwton">script</button></div> -->
+
+        <!-- 尾部 -->
+        <footer>
+            <div class="text">可查<span id="locationWord" class="blue">豫A</span>车牌全国违章，以及全国车在<span id="location" class="blue">河南</span>境内违章</div>
+        </footer>
+
+
+    </main>
+
+
 
 
     <script>
-        let $sel = $("#carId");
-        $sel.change('keypress', function() {
-            console.log($sel.val());
-            for (let i = 0; i < hash.length; i++) {
-                if ($sel.val() === hash[i][1]) {
-                    $("#locationWord").text(hash[i][1]);
-                    $("#location").text(hash[i][0]);
-                }
-            }
-
-
-        });
-
-        let $idNumber = $('#idNumber');
-        $idNumber.bind("keypress", function() {
-            let number = $idNumber.innerHTML;
-            console.log(333);
-            console.log(number);
-        })
-
-
         hash = {
             0: ['北京市', '京'],
 
@@ -270,7 +376,199 @@
             opt.innerHTML = hash[i][1];
             $('#carId').append(opt);
         }
+
+
+        $('#shadow').addClass('goAway')
+        $('#message').addClass('goAway')
+
+        $('.wrapYes').on('click', () => {
+            $('#shadow').addClass('goAway')
+            $('#message').addClass('goAway')
+        })
     </script>
+
+    <!-- <script>
+        button.addEventListener('click', function(e) {
+            let script = document.createElement('script')
+
+            script.src = "http://v.juhe.cn/wz/citys?province=ZJ&dtype=JSON&format=1&callback=xxx&key=454280e0a221771eb5e58bfb37d7fc0c"
+            document.body.appendChild(script)
+
+            script.onload = function(e) {
+                // debugger
+                // amount.innerText
+                e.currentTarget.remove()
+            }
+
+
+            script.onerror = function(x) {
+                alert('fail')
+                x.currentTarget.remove()
+            }
+        })
+        window.xxx = function(data) {
+            console.log(data)
+        }
+    </script> -->
+
+
+
+
+
+
+
+    <script>
+        // window.alert = function(name) {
+        //     const iframe = document.createElement('IFRAME');
+        //     iframe.style.display = 'none';
+        //     iframe.setAttribute('src', 'data:text/plain,');
+        //     document.documentElement.appendChild(iframe);
+        //     window.frames[0].window.alert();
+        //     iframe.parentNode.removeChild(iframe);
+        // };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        let $sel = $("#carId")
+        let carId = $sel.val()
+        $sel.change(function() {
+
+            carId = $sel.val()
+                // console.log(carId)
+            for (let i = 0; i < hash.length; i++) {
+                if ($sel.val() === hash[i][1]) {
+                    $("#locationWord").text(hash[i][1]);
+                    $("#location").text(hash[i][0]);
+                }
+            }
+
+
+        });
+
+
+
+
+
+        let $idNumber = $('#idNumber');
+        let idNumber = $idNumber.val()
+        $idNumber.bind("keyup", function() {
+            idNumber = $idNumber.val()
+                // console.log(idNumber)
+
+        })
+
+        let $engineno = $('#engineno')
+        let engineno = $engineno.val()
+        $engineno.bind('keyup', function() {
+            engineno = $engineno.val()
+            console.log(engineno)
+        })
+
+
+        let $classno = $('#classno')
+        let classno = $classno.val()
+        $classno.bind('keyup', function() {
+            classno = $classno.val()
+                // console.log(classno)
+        })
+
+
+
+
+
+
+        $('#submit').on('click', function() {
+            // console.log(carId)
+            // console.log(idNumber)
+
+            // console.log(classno)
+            // console.log(engineno)
+            // console.log(carId + idNumber)
+
+            jQuery(document).ready(function() {
+                $.ajax({
+                    type: "GET",
+                    async: false,
+                    url: "http://v.juhe.cn/wz/query",
+                    dataType: "jsonp",
+                    data: "city=GD_JM" + "&hphm=" + idNumber + "&hpzl=02" + "&engineno=" + engineno + "&classno=" + classno + "&key=8c48cd76361c616fae96077c9aa60682&dtype=jsonp",
+                    jsonp: "callback", //传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(一般默认为:callback)
+                    jsonpCallback: "flightHandler", //自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名，也可以写"?"，jQuery会自动为你处理数据
+                    success: function(json) {
+                        // alert('用户名是： ' + json.uname + ' 登陆密码： ' + json.upass + '，费用合计：' + json.monney + '元。');
+
+                        $('#shadow').removeClass('goAway')
+                        $('#message').removeClass('goAway')
+                        $('#resultcode').text(json.resultcode)
+                        $('#reason').text(json.reason)
+                        $('#result').text('长度是' + json.result.province)
+
+
+                    },
+
+
+                    error: function() {
+                        alert("fail");
+                    }
+                });
+            });
+        })
+
+        //     jQuery(document).ready(function() {
+        //         $.ajax({
+        //             type: "POST",
+        //             async: false,
+        //             url: "http://v.juhe.cn/sweizhang/query",
+        //             dataType: "jsonp",
+        //             data: "key=690696b61d474d3de85eb9af57fa1450",
+        //             jsonp: "callback", //传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(一般默认为:callback)
+        //             jsonpCallback: "flightHandler", //自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名，也可以写"?"，jQuery会自动为你处理数据
+        //             success: function(json) {
+        //                 console.log(json.resultcode)
+        //             },
+        //             error: function() {
+        //                 alert("fail");
+        //             }
+        //         });
+        //     });
+
+        // })
+
+
+        // swal('任何一个傻瓜都会用电脑')
+        // swal(
+        //     '互联网？',
+        //     '还在吗？',
+        //     'question'
+        // )
+        // swal({
+        //     title: "漂亮！",
+        //     text: "这是自定义图标。",
+        //     imageUrl: "images/thumbs-up.jpg"
+        // });
+    </script>
+
+
+
+
+
 </body>
 
 </html>
